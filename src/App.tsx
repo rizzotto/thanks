@@ -168,7 +168,7 @@ function App() {
         className="flex flex-col items-center justify-center gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
+        transition={{ duration: 4 }}
       >
         <div className="flex flex-col md:flex-row items-center gap-2">
           <div className="text-xl md:text-5xl text-center font-bold text-neutral-800">
