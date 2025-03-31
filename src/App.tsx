@@ -29,6 +29,14 @@ function App() {
     setLoading(false);
   };
 
+  const props = {
+    onLoad: handleImageLoad,
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+    },
+  };
+
   return (
     <div className="bg-neutral-100 h-screen flex flex-col items-center justify-center overflow-hidden relative">
       {loading && (
@@ -112,112 +120,112 @@ function App() {
         drag
         whileHover={{ scale: 1.02 }}
         src={veneerLogo}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] -rotate-2 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={lunch}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="w-48 p-2 bg-white rotate-12 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={hp}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="p-2 bg-white -rotate-12 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={length}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-h-[400px] md:max-h-[600px] -rotate-3 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={bg}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] rotate-6 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={website}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="rotate-5 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={datepicker}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] rotate-6 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={us}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="-rotate-5 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={gh}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-h-[400px] md:max-h-[600px] rotate-12 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={poa}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="-rotate-3 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={contribution}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-h-[400px] md:max-h-[600px] -rotate-3 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={pizza}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] rotate-4 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={first}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-h-[300px] -rotate-12 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={pingId}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="-rotate-6 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={table}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] rotate-6 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
         drag
         whileHover={{ scale: 1.02 }}
         src={last}
-        onLoad={handleImageLoad}
+        {...props}
       />
       <motion.div
         className="flex flex-col items-center justify-center gap-4"
