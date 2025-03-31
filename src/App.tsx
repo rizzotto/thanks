@@ -54,7 +54,7 @@ function App() {
               stroke-width="5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              className="text-gray-900"
+              className="text-neutral-900"
             ></path>
           </svg>
         </div>
