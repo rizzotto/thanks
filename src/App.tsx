@@ -20,26 +20,50 @@ import veneerLogoColor from "/logo_color.svg";
 import website from "/website.png";
 
 import Socials from "./components/socials";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [showInitialLoader, setShowInitialLoader] = useState(true);
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>(
+    {}
+  );
 
-  const handleImageLoad = () => {
-    setLoading(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setShowInitialLoader(false), 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleImageLoad = (key: string) => {
+    setLoadedImages((prev: Record<string, boolean>) => {
+      if (prev[key]) {
+        return prev;
+      }
+
+      return { ...prev, [key]: true };
+    });
   };
 
-  const props = {
-    onLoad: handleImageLoad,
-    initial: { opacity: 0 },
-    animate: {
-      opacity: 1,
-    },
+  const getImageMotionProps = (key: string) => ({
+    onLoad: () => handleImageLoad(key),
+    initial: { opacity: 0, scale: 0.95 },
+    animate: loadedImages[key]
+      ? { opacity: 1, scale: 1 }
+      : { opacity: 0, scale: 0.95 },
+    transition: { duration: 0.4 },
+  });
+
+  const draggableImageProps = (key: string) => {
+    const base = getImageMotionProps(key);
+    return {
+      ...base,
+      drag: true,
+      whileHover: { scale: 1.02 },
+    };
   };
 
   return (
     <div className="bg-neutral-100 h-screen flex flex-col items-center justify-center overflow-hidden relative">
-      {loading && (
+      {showInitialLoader && (
         <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
           <svg
             className="w-12 h-12 text-gray-300 animate-spin"
@@ -62,7 +86,7 @@ function App() {
               stroke-width="5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              className="text-neutral-900"
+              className="text-gray-600"
             ></path>
           </svg>
         </div>
@@ -70,162 +94,142 @@ function App() {
       <motion.img
         src={arrow1}
         className="w-24 md:w-auto absolute top-12 left-12"
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={
+          loadedImages.arrowTopLeft
+            ? { opacity: 1, scale: [1, 1.2, 1] }
+            : { opacity: 0, scale: 0.95 }
+        }
         transition={{
           duration: 1,
           ease: "easeInOut",
         }}
-        onLoad={handleImageLoad}
+        onLoad={() => handleImageLoad("arrowTopLeft")}
       />
       <motion.img
         src={arrow2}
         className="w-24 md:w-auto absolute top-2 right-12"
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={
+          loadedImages.arrowTopRight
+            ? { opacity: 1, scale: [1, 1.2, 1] }
+            : { opacity: 0, scale: 0.95 }
+        }
         transition={{
           duration: 1,
           ease: "easeInOut",
         }}
-        onLoad={handleImageLoad}
+        onLoad={() => handleImageLoad("arrowTopRight")}
       />
       <motion.img
         src={arrow1}
         className="w-24 md:w-auto absolute bottom-12 right-16 rotate-180"
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={
+          loadedImages.arrowBottomRight
+            ? { opacity: 1, scale: [1, 1.2, 1] }
+            : { opacity: 0, scale: 0.95 }
+        }
         transition={{
           duration: 1,
           ease: "easeInOut",
         }}
-        onLoad={handleImageLoad}
+        onLoad={() => handleImageLoad("arrowBottomRight")}
       />
       <motion.img
         src={arrow2}
         className="w-24 md:w-auto absolute bottom-8 left-16 rotate-180"
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={
+          loadedImages.arrowBottomLeft
+            ? { opacity: 1, scale: [1, 1.2, 1] }
+            : { opacity: 0, scale: 0.95 }
+        }
         transition={{
           duration: 1,
           ease: "easeInOut",
         }}
-        onLoad={handleImageLoad}
+        onLoad={() => handleImageLoad("arrowBottomLeft")}
       />
       <motion.img
         className="w-3xl rotate-5 bg-white p-2 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={veneerLogo}
-        {...props}
+        {...draggableImageProps("veneerLogo")}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] -rotate-2 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={lunch}
-        {...props}
+        {...draggableImageProps("lunch")}
       />
       <motion.img
         className="w-48 p-2 bg-white rotate-12 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={hp}
-        {...props}
+        {...draggableImageProps("hp")}
       />
       <motion.img
         className="p-2 bg-white -rotate-12 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={length}
-        {...props}
+        {...draggableImageProps("length")}
       />
       <motion.img
         className="max-h-[400px] md:max-h-[600px] -rotate-3 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={bg}
-        {...props}
+        {...draggableImageProps("bg")}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] rotate-6 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={website}
-        {...props}
+        {...draggableImageProps("website")}
       />
       <motion.img
         className="rotate-5 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={datepicker}
-        {...props}
+        {...draggableImageProps("datepicker")}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] rotate-6 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={us}
-        {...props}
+        {...draggableImageProps("us")}
       />
       <motion.img
         className="-rotate-5 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={gh}
-        {...props}
+        {...draggableImageProps("gh")}
       />
       <motion.img
         className="max-h-[400px] md:max-h-[600px] rotate-12 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={poa}
-        {...props}
+        {...draggableImageProps("poa")}
       />
       <motion.img
         className="-rotate-3 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={contribution}
-        {...props}
+        {...draggableImageProps("contribution")}
       />
       <motion.img
         className="max-h-[400px] md:max-h-[600px] -rotate-3 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={pizza}
-        {...props}
+        {...draggableImageProps("pizza")}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] rotate-4 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={first}
-        {...props}
+        {...draggableImageProps("first")}
       />
       <motion.img
         className="max-h-[300px] -rotate-12 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={pingId}
-        {...props}
+        {...draggableImageProps("pingId")}
       />
       <motion.img
         className="-rotate-6 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={table}
-        {...props}
+        {...draggableImageProps("table")}
       />
       <motion.img
         className="max-w-[300px] md:max-w-[900px] rotate-6 cursor-pointer rounded-xl border-neutral-400 border-2 absolute z-10"
-        drag
-        whileHover={{ scale: 1.02 }}
         src={last}
-        {...props}
+        {...draggableImageProps("last")}
       />
       <motion.div
         className="flex flex-col items-center justify-center gap-4"
